@@ -30,23 +30,19 @@ const startScanner = () => {
         inputStream: {
             name: "Live",
             type: "LiveStream",
+	    // カメラ映像を表示するHTML要素の設定
             target: document.querySelector('#photo-area'),
+	    // バックカメラの利用を設定. (フロントカメラは"user")
             constraints: {
-                decodeBarCodeRate: 3,
-                successTimeout: 500,
-                codeRepetition: true,
-                tryVertical: true,
-                frameRate: 15,
                 width: 640,
                 height: 480,
                 facingMode: "environment"
             },
         },
-        decoder: {
-            readers: [
-                "i2of5_reader","ean_reader", "ean_8_reader"
-            ]
-        },
+	 // 解析するワーカ数の設定
+        numOfWorkers: navigator.hardwareConcurrency || 4,
+        // バーコードの種類を設定
+        decoder: {readers: ["i2of5_reader","ean_reader", "ean_8_reader"]},
 
     }, function (err) {
         if (err) {
