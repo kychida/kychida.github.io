@@ -1,7 +1,7 @@
 manifest.json
 {
-  "name": "shisama",
-  "short_name": "shisama",
+  "name": "kychida",
+  "short_name": "kychida",
   "theme_color": "#2196f3",
   "background_color": "#2196f3",
   "display": "standalone",
