@@ -1,13 +1,15 @@
 #photo-area.viewport {
    background-color:red;
-   height: 288px;
+   height: 240px;
+   width:320px;
 }
 
 #photo-area.viewport canvas, video {
    float: left;
-   height: 288px;
+   height: 240px;
+   width:320px;
 }
 
 #photo-area.viewport canvas.drawingBuffer, video.drawingBuffer {
-   margin-left: -352px;
+   margin-left: -320;
 }
