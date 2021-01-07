@@ -20,7 +20,7 @@ $(function () {
      
     $('#scan-result').on('click', function() {
 	    console.log("click");
-	    $(this).val("result click...");
+	    $(this).text("result click...");
     });
 	
       
