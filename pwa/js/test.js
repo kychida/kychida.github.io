@@ -16,9 +16,13 @@ $(function () {
       Quagga.offProcessed(this.onProcessed)
       Quagga.offDetected(this.onDetected)
       Quagga.stop();
-      
-      $("#scan-result").val("none...");
 	});
+     
+    $('#scan-stop').on('click', function() {
+	 $("#scan-result").val("none...");
+    });
+	
+      
     
 
 });
