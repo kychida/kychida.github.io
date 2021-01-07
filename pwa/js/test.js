@@ -19,7 +19,8 @@ $(function () {
 	});
      
     $('#scan-result').on('click', function() {
-	 $("#scan-result").val("none...");
+	    console.log("click");
+	    $(this).val("result click...");
     });
 	
       
