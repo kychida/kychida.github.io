@@ -62,7 +62,6 @@ const startScanner = () => {
 
     let codes = []
     Quagga.onDetected(function (result) {
-       console.log("onDetected");
        // １つでもエラー率0.16以上があれば除外
        let is_err = false
        $.each(result.codeResult.decodedCodes, function (id, error) {
@@ -73,7 +72,7 @@ const startScanner = () => {
          }
        })
        if (is_err) return
-
+	    console.log(result.codeResult.code)
        // エラー率のmedianが0.05以上なら除外
        const errors = result.codeResult.decodedCodes.filter((_) => _.error !== undefined).map((_) => _.error)
        const median = _getMedian(errors)
