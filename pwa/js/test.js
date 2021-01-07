@@ -2,7 +2,19 @@
  
 $(function () {
 
-    startScanner();
+	$('#scan-start').on('click', function() {
+	  alert("クリックされました");
+	  startScanner();
+	});
+	
+	$('#scan-stop').on('click', function() {
+	  alert("クリックされました");
+	  
+      Quagga.offProcessed(this.onProcessed)
+      Quagga.offDetected(this.onDetected)
+      Quagga.stop();
+	});
+    
 
 });
 
