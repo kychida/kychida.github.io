@@ -1,5 +1,5 @@
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/service-worker.js', { scope: '/pwa/js/' })
+  navigator.serviceWorker.register('/pwa/js/service-worker.js', { scope: '/pwa/' })
   .then(function(reg) {
     console.log('登録に成功しました。 Scope は ' + reg.scope);
   }).catch(function(error) {
