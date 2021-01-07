@@ -1,7 +1,8 @@
 manifest.json
 {
-  "name": "kychida",
-  "short_name": "kychida",
+  "name": "PWA sample",
+  "short_name": "PWA",
+  "description":"PWAのサンプル的なもの",
   "theme_color": "#2196f3",
   "background_color": "#2196f3",
   "display": "standalone",
