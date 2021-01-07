@@ -11,5 +11,5 @@
 }
 
 #photo-area.viewport canvas.drawingBuffer, video.drawingBuffer {
-   margin-left: -320;
+   //margin-left: -320;
 }
