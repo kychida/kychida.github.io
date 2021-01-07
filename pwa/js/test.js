@@ -17,7 +17,7 @@ $(function () {
       Quagga.offDetected(this.onDetected)
       Quagga.stop();
       
-      $("#scan-result).val("none...");
+      $("#scan-result").val("none...");
 	});
     
 
