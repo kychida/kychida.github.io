@@ -88,6 +88,8 @@ const startScanner = () => {
             }
 
             if (result.codeResult && result.codeResult.code) {
+		console.log("result" + result.codeResult);
+		console.log("code" + result.codeResult.code);
                 Quagga.ImageDebug.drawPath(result.line, {
                     x: 'x',
                     y: 'y'
