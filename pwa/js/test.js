@@ -18,7 +18,7 @@ $(function () {
       Quagga.stop();
 	});
      
-    $('#scan-stop').on('click', function() {
+    $('#scan-result').on('click', function() {
 	 $("#scan-result").val("none...");
     });
 	
