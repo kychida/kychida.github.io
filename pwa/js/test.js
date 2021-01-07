@@ -60,6 +60,15 @@ const startScanner = () => {
         _scannerIsRunning = true;
     });
 
+	function _getMedian(arr) {
+  arr.sort((a, b) => a - b)
+  const half = Math.floor(arr.length / 2)
+  if (arr.length % 2 === 1)
+    // Odd length
+    return arr[half]
+  return (arr[half - 1] + arr[half]) / 2.0
+}
+	
     let codes = []
     Quagga.onDetected(function (result) {
        // １つでもエラー率0.16以上があれば除外
