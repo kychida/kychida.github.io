@@ -44,7 +44,7 @@ const startScanner = () => {
         },
         decoder: {
             readers: [
-                "i2of5_reader"
+                "i2of5_reader","ean_reader", "ean_8_reader"
             ]
         },
 
