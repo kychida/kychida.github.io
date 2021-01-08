@@ -11,15 +11,13 @@ body > * {
 
 
 #photo-area.viewport canvas, video {
-     background-color:blue;
    height: 240px;
    width:320px;
+    float: left;
 }
 
 #photo-area.viewport canvas.drawingBuffer, video.drawingBuffer {
-     background-color:green;
-    height: 240px;
-    width:320px;
+   margin-left: -320px;
 }
 
 .search-button {
