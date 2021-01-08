@@ -102,10 +102,10 @@ const startScanner = () => {
       // $('.scan_area').hide()
        $("#scan-result").text(result.codeResult.code);
        Quagga.stop()
-       Quagga.offProcessed(this.onProcessed)
-       Quagga.offDetected(this.onDetected)
-       //Quagga.offProcessed(_onProcessed)
-       //Quagga.offDetected(_onDetected)
+       //Quagga.offProcessed(this.onProcessed)
+       //Quagga.offDetected(this.onDetected)
+       Quagga.offProcessed(_onProcessed)
+       Quagga.offDetected(_onDetected)
   
     });
     
