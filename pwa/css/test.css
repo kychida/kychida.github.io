@@ -4,17 +4,20 @@ body > * {
 
 #photo-area.viewport {
    background-color:pink;
+    border:1px solid;
    height: 240px;
    width:320px;
 }
 
 
 #photo-area.viewport canvas, video {
+     background-color:blue;
    height: 240px;
    width:320px;
 }
 
 #photo-area.viewport canvas.drawingBuffer, video.drawingBuffer {
+     background-color:green;
     height: 240px;
     width:320px;
 }
