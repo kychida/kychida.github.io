@@ -1,9 +1,14 @@
+body > * {
+    font-size:0.8em;
+}
+
 #photo-area.viewport {
    background-color:pink;
    height: 240px;
    width:320px;
 }
 
+/*
 #photo-area.viewport canvas, video {
    float: left;
    height: 240px;
@@ -11,5 +16,30 @@
 }
 
 #photo-area.viewport canvas.drawingBuffer, video.drawingBuffer {
-   //margin-left: -320;
+   margin-left: -320;
+}
+*/
+
+.search-button {
+  margin:3px;
+  appearance: none;
+  border: 0;
+  border-radius: 5px;
+  background: #ff7f50;
+  color: #fff;
+  padding: 8px 8px;
+  font-size: 1.2em;
+  width:200px;
+}
+
+span {
+margin:3px;
+}
+input {
+margin:3px;
+}
+
+section {
+padding:10px;
+color:green;
 }
