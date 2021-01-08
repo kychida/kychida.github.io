@@ -9,6 +9,7 @@ if ('serviceWorker' in navigator) {
 
 $(function () {
     $('#scan-start').on('click', function() {
+      $("#scan-result").text("");
       startScanner();
     });
 
