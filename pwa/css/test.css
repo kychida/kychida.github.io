@@ -43,3 +43,11 @@ section {
 padding:10px;
 color:green;
 }
+
+#scan-result {
+    border:1px solid;
+    font-size:1.2em;
+    padding:2px;
+    margin-bottom:5px;
+    width:320px;
+}
