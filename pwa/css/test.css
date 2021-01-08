@@ -8,17 +8,16 @@ body > * {
    width:320px;
 }
 
-/*
+
 #photo-area.viewport canvas, video {
-   float: left;
    height: 240px;
    width:320px;
 }
 
 #photo-area.viewport canvas.drawingBuffer, video.drawingBuffer {
-   margin-left: -320;
+    height: 240px;
+    width:320px;
 }
-*/
 
 .search-button {
   margin:3px;
