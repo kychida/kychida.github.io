@@ -68,6 +68,7 @@ const startScanner = () => {
 }
 	
     let codes = []
+    const success_num = 1;
     Quagga.onDetected(function (result) {
        // １つでもエラー率0.16以上があれば除外
        let is_err = false
@@ -87,9 +88,9 @@ const startScanner = () => {
          return
        }
 
-       // ３連続同じ数値だった場合のみ採用する
+       // success_num数連続同じ数値だった場合のみ採用する
        codes.push(result.codeResult.code)
-       if (codes.length < 3) return
+       if (codes.length < success_num) return
        let is_same_all = false
        if (codes.every((v) => v === codes[0])) {
          is_same_all = true
