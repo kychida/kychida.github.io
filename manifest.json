@@ -1,13 +1,12 @@
 {
-  "lang":"ja",
   "name": "PWA sample",
   "short_name": "PWA",
   "description":"PWAのサンプル的なもの",
   "theme_color": "green",
   "background_color": "purple",
-  "display": "minimal-ui",
-  "scope": "/",
-  "start_url": "https://kychida.github.io/",
+  "display": "standalone",
+  "Scope": "/",
+  "start_url": "index.html",
   "icons": [
     {
       "src": "images/icons/icon-144x144.png",
