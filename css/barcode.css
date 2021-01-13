@@ -1,0 +1,28 @@
+@charset "utf-8";
+
+#photo-area.viewport {
+   background-color:black;
+    border:1px solid;
+    height: 240px;
+    width:320px;
+}
+
+
+#photo-area.viewport canvas, video {
+   height: 240px;
+   width:320px;
+    float: left;
+}
+
+#photo-area.viewport canvas.drawingBuffer, video.drawingBuffer {
+   margin-left: -320px;
+}
+
+#scan-result {
+    border:1px solid;
+    font-size:1.0em;
+    padding:2px;
+    margin-bottom:5px;
+    width:320px;
+    height:20px;
+}
