@@ -24,8 +24,10 @@ const startScanner = () => {
         // 解析するワーカ数の設定
         numOfWorkers: navigator.hardwareConcurrency || 4,
         // バーコードの種類を設定
-        decoder: {readers: ["i2of5_reader","ean_reader", "ean_8_reader"]},
-
+        decoder: {
+          readers: ["i2of5_reader","ean_reader", "ean_8_reader"],
+          multiple: false,  //同時に複数のバーコードを解析しない
+          },
     }, function (err) {
         if (err) {
             console.log(err);
@@ -39,15 +41,15 @@ const startScanner = () => {
         _scannerIsRunning = true;
     });
 
-	function _getMedian(arr) {
-  arr.sort((a, b) => a - b)
-  const half = Math.floor(arr.length / 2)
-  if (arr.length % 2 === 1)
-    // Odd length
-    return arr[half]
-  return (arr[half - 1] + arr[half]) / 2.0
-}
-	
+    function _getMedian(arr) {
+      arr.sort((a, b) => a - b)
+      const half = Math.floor(arr.length / 2)
+      if (arr.length % 2 === 1)
+      // Odd length
+      return arr[half]
+      return (arr[half - 1] + arr[half]) / 2.0
+    }
+    
     let codes = []
     const success_num = 1;
     Quagga.onDetected(function (result) {
@@ -61,7 +63,7 @@ const startScanner = () => {
          }
        })
        if (is_err) return
-	    console.log(result.codeResult.code)
+        console.log(result.codeResult.code)
        // エラー率のmedianが0.05以上なら除外
        const errors = result.codeResult.decodedCodes.filter((_) => _.error !== undefined).map((_) => _.error)
        const median = _getMedian(errors)
