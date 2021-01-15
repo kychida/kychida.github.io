@@ -25,7 +25,7 @@ const startScanner = () => {
         numOfWorkers: navigator.hardwareConcurrency || 4,
         // バーコードの種類を設定
         decoder: {
-          readers: ["i2of5_reader","ean_reader", "ean_8_reader"],
+          readers: ["code_128_reader","ean_reader", "ean_8_reader"],
           multiple: false,  //同時に複数のバーコードを解析しない
           },
     }, function (err) {

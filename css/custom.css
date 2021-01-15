@@ -1,0 +1,24 @@
+.header-container {
+    padding-top:20px;
+    background-color:#F3C13A;
+}
+
+
+.breadcrumb {
+    margin-top:10px;
+    font-size:1.2em;
+    list-style: none;
+    display: flex;
+}
+
+.breadcrumb li{
+  display: inline-block;
+}
+.breadcrumb li + li:before{
+  content: ">";
+  margin: 0 0.8em;
+}
+
+.breadcrumb .current {
+   font-weight:bold;
+}

@@ -1,8 +1,15 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <!-- Basic Page Needs
+     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta charset="UTF-8">
+    <title>PWA sample</title>
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <!-- Apple
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="pwa sample">
@@ -10,20 +17,32 @@
     <link rel="apple-touch-icon" href="./images/icons/icon-114x114.png" sizes="114x114">
     <link rel="apple-touch-icon" href="./images/icons/icon-120x120.png" sizes="120x120">
     <link rel="apple-touch-icon" href="./images/icons/icon-144x144.png" sizes="144x144">
-    <link rel="apple-touch-startup-image" href="./images/images/icons/icon-512x512.png">
-    <link rel="manifest" href="manifest.json">
-    <!--<link rel="stylesheet" href="./css/style.css">-->
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
-
-    <title>PWA sample</title>
+    <link rel="stylesheet" href="./css/custom.css">
+    <!-- PWA
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="manifest" href="manifest.json">
 </head>
+
 
 <body>
 
     <header>
+     <div class="header-container">
       <div class="container">
         <h1 class="title">PWA sample</h1>
-        <h2 class="subtitle">商品検索</h2>
+        <!--<h2 class="subtitle">TOP</h2>-->
+      </div>
+     </div>
+      <div class="container">
+      <nav>
+        <ul class="breadcrumb">
+          <li><a href="./index.html">HOME</a></li>
+          <li class="current">商品検索</li>
+        </ul>
+      </nav>
       </div>
     </header>
     
@@ -32,7 +51,7 @@
         <section>
         <span>JANコード</span><br>
         <input type="text"><br>
-        <button @click="searchJanCode" class="search-button">検索</button>
+        <button @click="searchJanCode" class="button-primary">検索</button>
         </section>
         
         <hr>
@@ -41,7 +60,7 @@
         <input type="text" name="pname"><br>
         <span>メーカー名</span><br>
         <input type="text" name="mname" ><br>
-        <button @click="searchMulti" class="search-button">検索</button>
+        <button @click="searchMulti" class="button-primary">検索</button>
         </section>
         
         </form>
