@@ -47,9 +47,12 @@
     </header>
     
     <article class="container" id="app">
+    
+        <br>
+        <a class="button" style="width:200px; background-color:orange;" href="./barcode.html">バーコード検索</a>
         <section>
         <span>JANコード</span><br>
-        <input type="text" v-model="vJanCode"><br>
+        <input type="text" name="vJanCode" v-model="vJanCode"><br>
         <button v-on:click="searchJanCode" class="button-primary">検索</button>
         </section>
         

@@ -5,6 +5,7 @@
                    vPassword:"",
                    vInfoUrl:"",
                    vSearchUrl:"",
+                   vBaseUrl:"",
                    vNoText:"",
                    vJanCode:"",
                    vPName:"",
@@ -26,11 +27,11 @@
                   this.vInfoUrl = localStorage.getItem('vInfoUrl');
                   this.vSearchUrl = localStorage.getItem('vSearchUrl');
                   this.vNoText = localStorage.getItem('vNoText');
+                  this.vBaseUrl = localStorage.getItem('vBaseUrl');
                },
                methods: {
                 submitSetting() {
                    console.log("submit setting");
-                   console.log(this.vNoText);
                    if (this.vLoginid === '') return;
                    if (this.vPassword === '') return;
                    localStorage.setItem('vLoginid', this.vLoginid);
@@ -38,35 +39,42 @@
                    if (this.vNoText != '') {
                      localStorage.setItem('vNoText', this.vNoText);
                    }
+                   if (this.vBaseUrl != '') {
+                     localStorage.setItem('vBaseUrl', this.vBaseUrl);
+                   }
                    if (this.vInfoUrl != '') {
                      localStorage.setItem('vInfoUrl', this.vInfoUrl);
                    }
                    if (this.vSearchUrl != '') {
                      localStorage.setItem('vSearchUrl', this.vSearchUrl);
                    }
+                   if (this.vPassword != '') {
+                      localStorage.setItem('hashPassword', md5(this.vPassword));
+                   }
                    alert("設定しました");
                 },
                 clickInfoURL() {
-                  var url = localStorage.getItem('vInfoUrl');
-                  var lid = localStorage.getItem('vLoginid');
-                  var pp = localStorage.getItem('vPassword');
-                  var no = localStorage.getItem('vNoText');
-                  var accessUrl = url + "?id=" +lid + "&t=" + pp + "&no=" + no;
+                  var accessUrl = this.createUrl("sp/usefulInfo/top") ;
                   window.location = accessUrl;
                 },
                 clickSearchURL() {
-                  console.log("clickSearchURL");
-                  var url = localStorage.getItem('vSearchUrl');
-                  var lid = localStorage.getItem('vLoginid');
-                  var pp = localStorage.getItem('vPassword');
-                  var no = localStorage.getItem('vNoText');
-                  var accessUrl = url + "?id=" +lid + "&t=" + pp + "&no=" + no + "&mname=" +"&pname=" ;
+                  var accessUrl = this.createUrl("sp/goods/sname") ;
+                  accessUrl = accessUrl + "&pname=" + this.vPName;
+                  accessUrl = accessUrl + "&mname=" + this.vMName;
                   window.location = accessUrl;
                 },
                 searchJanCode() {
-                  console.log("jan");
-                  alert("現在作成中です");
-                  return;
+                  var accessUrl = this.createUrl("sp/goods/sjan") ;
+                  accessUrl = accessUrl + "&jan=" + this.vJanCode;
+                  window.location = accessUrl;
+                },
+                createUrl(substr) {
+                  var url = localStorage.getItem('vBaseUrl');
+                  var lid = localStorage.getItem('vLoginid');
+                  var pp = localStorage.getItem('hashPassword');
+                  var no = localStorage.getItem('vNoText');
+                  var para ="?id=" +lid + "&t=" + pp + "&no=" + no;
+                  return url + substr + para;
                 },
               }
               
