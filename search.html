@@ -46,27 +46,25 @@
       </div>
     </header>
     
-    <article class="container">
-        <form>
+    <article class="container" id="app">
         <section>
         <span>JANコード</span><br>
-        <input type="text"><br>
-        <button @click="searchJanCode" class="button-primary">検索</button>
+        <input type="text" v-model="vJanCode"><br>
+        <button v-on:click="searchJanCode" class="button-primary">検索</button>
         </section>
         
         <hr>
         <section>
         <span>商品名</span><br>
-        <input type="text" name="pname"><br>
+        <input type="text" name="pname" v-model="vPName"><br>
         <span>メーカー名</span><br>
-        <input type="text" name="mname" ><br>
-        <button @click="searchMulti" class="button-primary">検索</button>
+        <input type="text" name="mname" v-model="vMName" ><br>
+        <button v-on:click="clickSearchURL" class="button-primary">検索</button>
         </section>
-        
-        </form>
     </article>
     
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./js/app.js"></script>
 
 </body>
 </html>

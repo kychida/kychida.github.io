@@ -51,48 +51,19 @@
             <label>ログインID</label>
             <input type="text" name="loginid" v-model="vLoginid" placeholder="ID"><br>
             <label>パスワード</label>
-            <input type="password" v-model="vPassword"><br>
+            <input type="text" v-model="vPassword"><br>
+            <label>No</label>
+            <input type="text" v-model="vNoText"><br>
+            <label>お役立ち情報</label>
+            <input type="text" size="120" name="infoUrl" v-model="vInfoUrl" placeholder="お役立ち情報"><br>
+            <label>URL</label>
+            <input type="text" size="120" name="searchUrl" v-model="vSearchUrl" placeholder="商品検索URL"><br>
             <button class="button-primary" v-on:click="submitSetting">SUBMIT</button>
         </section>
     </article>
 
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-        <script>
-        var app = new Vue({
-            el: '#app',
-            data :{
-                   vLoginid:"",
-                   vPassword:""
-                
-               },
-               computed: {
-                   isInValidName() {
-                        return this.loginid.length < 5
-                   },
-                   isInValidPhone() {
-                       return this.phone.length < 8
-                   },
-               },
-                mounted : function(){
-                  console.log('mounted')
-                  this.vLoginid = localStorage.getItem('vLoginid');
-                  this.vPassword = localStorage.getItem('vPassword');
-               },
-               methods: {
-                submitSetting() {
-                   console.log("submit setting");
-                   if (this.vLoginid === '') return;
-                   if (this.vPassword === '') return;
-                   console.log(this.vLoginid);
-                   console.log(this.vPassword);
-                   localStorage.setItem('vLoginid', this.vLoginid);
-                   localStorage.setItem('vPassword', this.vPassword);
-                   this.sLoginid = this.vLoginid;
-                   alert("設定しました");
-                },
-              }
-              
-          });
-        </script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./js/app.js"></script>
+
 </body>
 </html>

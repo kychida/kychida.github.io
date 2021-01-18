@@ -45,14 +45,14 @@
       </div>
     </header>
     
-    <article class="container">
+    <article class="container" id="app">
       <section>
        <br>
        <a class="button" style="width:200px;" href="./barcode.html">バーコード検索</a>
        <br>
        <a class="button" style="width:200px;" href="./search.html">商品検索</a>
        <br>
-       <a class="button" style="width:200px;" href="http://www.google.co.jp/">お役立ち情報</a>
+       <a class="button" style="width:200px;" v-on:click="clickInfoURL">お役立ち情報</a>
        <br>
        <a class="button"  style="width:200px;"href="./setting.html">設定</a>
        </section>
@@ -71,5 +71,9 @@ if ('serviceWorker' in navigator) {
       });
 }
 </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./js/app.js"></script>
+    
 </body>
 </html>
