@@ -59,9 +59,10 @@
         </select>
        <div id="scan-result">スキャン結果を表示します</div>-->
         
-        <div>
-        <button id="scan-start">スキャン開始</button>
-        <button id="scan-stop">スキャン停止</button>
+        <div id="button-camera">
+        <span class="scan-message">使用可能なカメラデバイスが存在しません。</span>
+        <button id="scan-start" class="scan-button">スキャン開始</button>
+        <button id="scan-stop" class="scan-button">スキャン停止</button>
         </div>
         <br>
         <div id="photo-area" class="viewport"></div>
@@ -72,11 +73,14 @@
 
         <script src="js/barcode.js" type="text/javascript"></script>
         <script>
+        $(".scan-button").hide();
         navigator.mediaDevices.enumerateDevices().then(function(devices) { // 成功時
           devices.forEach(function(device) {
             // デバイスごとの処理
             if (device.kind == 'videoinput') {
-               $('#selectCamera').append("<li>" + device.kind + " , " + device.label + "</ul>");
+               $(".scan-button").show();
+               $(".scan-message").hide();
+               $('#selectCamera').append("<li>" + device.label + "</ul>");
             }
            });
          });</script>
