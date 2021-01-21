@@ -49,6 +49,8 @@
 
 
     <article class="container">
+        <div id="selectCamera">
+        </div>
          <!--カメラ選択
         <select id="selectCamera">
            <option value=""></option>
@@ -73,6 +75,7 @@
       devices.forEach(function(device) {
        // デバイスごとの処理
        console.log(device.kind);
+       $('#selectCamera').append(device.kind + " : " + device.label);
       });
     });</script>
 </body>
