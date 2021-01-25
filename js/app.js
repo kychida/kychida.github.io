@@ -5,8 +5,6 @@
             data :{
                    vLoginid:"",
                    vPassword:"",
-                   vInfoUrl:"",
-                   vSearchUrl:"",
                    vBaseUrl:"",
                    vNoText:"",
                    vJanCode:"",
@@ -53,26 +51,25 @@
                 },
                 submitSetting() {
                    console.log("submit url setting");
-                   if (this.vNoText != '') {
-                     localStorage.setItem('vNoText', this.vNoText);
-                   }
-                   if (this.vBaseUrl != '') {
-                     localStorage.setItem('vBaseUrl', this.vBaseUrl);
-                   }
+                   localStorage.setItem('vNoText', this.vNoText);
+                   localStorage.setItem('vBaseUrl', this.vBaseUrl);
                    alert("設定しました");
                 },
                 clickInfoURL() {
                   var accessUrl = this.createUrl("sp/usefulInfo/top") ;
+                  if (accessUrl === null) return;
                   window.location = accessUrl;
                 },
                 clickSearchURL() {
                   var accessUrl = this.createUrl("sp/goods/sname") ;
+                  if (accessUrl === null) return;
                   accessUrl = accessUrl + "&pname=" + this.vPName;
                   accessUrl = accessUrl + "&mname=" + this.vMName;
                   window.location = accessUrl;
                 },
                 searchJanCode() {
                   var accessUrl = this.createUrl("sp/goods/sjan") ;
+                  if (accessUrl === null) return;
                   accessUrl = accessUrl + "&jan=" + this.vJanCode;
                   window.location = accessUrl;
                 },
@@ -82,6 +79,14 @@
                   var pp = localStorage.getItem('hashPassword');
                   var no = localStorage.getItem('vNoText');
                   var para ="?id=" +lid + "&t=" + pp + "&no=" + no;
+                  console.log(url);
+                  console.log(lid);
+                  console.log(pp);
+                  console.log(no);
+                  if (!url || !lid || !pp || !no) {
+                    alert("URL、ログイン情報を設定してください");
+                    return null;
+                  }
                   return url + substr + para;
                 },
               }
