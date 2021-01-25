@@ -47,11 +47,20 @@
     
     <article id="app" class="container">
         
-        <section>
+        
+        <p v-if="errors.length">
+    <b>Please correct the following error(s):</b>
+    <ul>
+      <li v-for="error in errors">{{ error }}</li>
+    </ul>
+    </p>
+    <section>
             <label>ログインID</label>
-            <input type="text" name="loginid" v-model="vLoginid" placeholder="ID" width="32"><br>
+            <input type="email" name="loginid" v-model="vLoginid" placeholder="ID" width="32"><br>
             <label>パスワード</label>
             <input type="password" v-model="vPassword"><br>
+            <button class="button-primary" v-on:click="submitAccountSetting">SUBMIT</button>
+            
             <label>No</label>
             <input type="text" v-model="vNoText"><br>
             <label>URL</label>

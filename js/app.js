@@ -1,3 +1,5 @@
+
+
         var app = new Vue({
             el: '#app',
             data :{
@@ -10,46 +12,52 @@
                    vJanCode:"",
                    vPName:"",
                    vMName:"",
+                   errors: [],
                 
-               },
-               computed: {
-                   isInValidName() {
-                        return this.loginid.length < 5
-                   },
-                   isInValidPhone() {
-                       return this.phone.length < 8
-                   },
-               },
-                mounted : function(){
-                  console.log('mounted')
-                  this.vLoginid = localStorage.getItem('vLoginid');
-                  this.vPassword = localStorage.getItem('vPassword');
-                  this.vInfoUrl = localStorage.getItem('vInfoUrl');
-                  this.vSearchUrl = localStorage.getItem('vSearchUrl');
-                  this.vNoText = localStorage.getItem('vNoText');
-                  this.vBaseUrl = localStorage.getItem('vBaseUrl');
-               },
-               methods: {
-                submitSetting() {
-                   console.log("submit setting");
-                   if (this.vLoginid === '') return;
-                   if (this.vPassword === '') return;
+            },
+            mounted : function(){
+              console.log('mounted')
+              this.vLoginid = localStorage.getItem('vLoginid');
+              this.vNoText = localStorage.getItem('vNoText');
+              this.vBaseUrl = localStorage.getItem('vBaseUrl');
+            },
+            methods: {
+                submitAccountSetting:function(e) {
+                   this.errors = [];
+                   if (!this.vLoginid) {
+                     this.errors.push('loginid required.');
+                   } else {
+                    console.log(this.vLoginid.length);
+                     if (this.vLoginid.length > 32) {
+                       this.errors.push('loginid is longer.');
+                     }
+                     if (!validLoginId(this.vLoginid)) {
+                       this.errors.push('loginid is invalid char.');
+                     }
+                   }
+                   if (!this.vPassword) {
+                     this.errors.push('password required.');
+                   } else {
+                       if (this.vPassword.length > 32) {
+                         this.errors.push('password is longer.');
+                       }
+                       if (!validPassword(this.vPassword)) {
+                         this.errors.push('password is invalid char.');
+                       }
+                   }
+                   e.preventDefault();
+                   if (this.errors.length > 0) return;
                    localStorage.setItem('vLoginid', this.vLoginid);
-                   localStorage.setItem('vPassword', this.vPassword);
+                   localStorage.setItem('hashPassword', md5(this.vPassword));
+                   alert("アカウント情報を設定しました");
+                },
+                submitSetting() {
+                   console.log("submit url setting");
                    if (this.vNoText != '') {
                      localStorage.setItem('vNoText', this.vNoText);
                    }
                    if (this.vBaseUrl != '') {
                      localStorage.setItem('vBaseUrl', this.vBaseUrl);
-                   }
-                   if (this.vInfoUrl != '') {
-                     localStorage.setItem('vInfoUrl', this.vInfoUrl);
-                   }
-                   if (this.vSearchUrl != '') {
-                     localStorage.setItem('vSearchUrl', this.vSearchUrl);
-                   }
-                   if (this.vPassword != '') {
-                      localStorage.setItem('hashPassword', md5(this.vPassword));
                    }
                    alert("設定しました");
                 },
@@ -79,3 +87,15 @@
               }
               
           });
+
+function validLoginId(str) {
+  if (str === null || str === undefined) return null;
+  const reg = /^[a-zA-Z0-9@_.~-]+$/;
+  return reg.test(str);
+}
+
+function validPassword(str) {
+  if (str === null || str === undefined) return null;
+  const reg = /^[a-zA-Z0-9]+$/;
+  return reg.test(str);
+}

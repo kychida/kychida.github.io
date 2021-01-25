@@ -2,11 +2,11 @@
   "name": "PWA sample",
   "short_name": "PWA",
   "description":"PWAのサンプル的なもの",
-  "theme_color": "green",
-  "background_color": "purple",
+  "theme_color": "#4e342e",
+  "background_color": "#FFFFFF",
   "display": "minimal-ui",
   "Scope": "/",
-  "start_url": "index.html",
+  "start_url": "./index.html",
   "icons": [
     {
       "src": "images/icons/icon-144x144.png",
