@@ -16,8 +16,7 @@ function gotDevices(deviceInfos) {
     const option = document.createElement('option');
     option.value = deviceInfo.deviceId;
     if (deviceInfo.kind === 'videoinput') {
-      document.querySelector('div.select').appendChild(deviceInfo.deviceId);
-      option.text = deviceInfo.label || `camera ${videoSelect.length + 1}`;
+      option.text = deviceInfo.deviceId || `camera ${videoSelect.length + 1}`;
       videoSelect.appendChild(option);
     } else {
       console.log('Some other kind of source/device: ', deviceInfo);
