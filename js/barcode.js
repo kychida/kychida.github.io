@@ -100,11 +100,11 @@ const startScanner = () => {
 
        //alert(result.codeResult.code)
       // $('.scan_area').hide()
-      // $("#scan-result").text(result.codeResult.code);
+       $("#scan-result").text(result.codeResult.code);
        Quagga.offProcessed()
        Quagga.offDetected()
        Quagga.stop()
-       window.location = "../search.html?sjan=123456"
+       //window.location = "../search.html?sjan=123456"
        //Quagga.offProcessed(this.onProcessed)
        //Quagga.offDetected(this.onDetected)
        //Quagga.offProcessed(_onProcessed)
