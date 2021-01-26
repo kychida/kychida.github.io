@@ -15,11 +15,11 @@ $(function () {
 
    navigator.mediaDevices.enumerateDevices().then(function(devices) { // 成功時
      devices.forEach(function(device) {
-       if (device.kind == 'videoinput') {
+       if (device.kind === 'videoinput') {
           console.log(device.deviceId);
           $(".scan-message").hide();
           $(".scan-area").show();
-          $('#selectCamera').append($("<option>").val(device.deviceId).text(device.label));
+          $('#selectCamera').append($("<option>").val(device.deviceId).text(device.label || `camera 1`));
        }
       });
     });
