@@ -1,15 +1,5 @@
 $(function () {
     $(".scan-area").hide();
-   navigator.mediaDevices.enumerateDevices().then(function(devices) { // 成功時
-     devices.forEach(function(device) {
-       if (device.kind == 'videoinput') {
-          $(".scan-message").hide();
-          $(".scan-area").show();
-          $('#selectCamera').append("<option>").html(device.label).val(device.deviceId);
-       }
-      });
-    });
-    
 
     $('#scan-start').on('click', function() {
       $("#scan-result").text("");
@@ -23,7 +13,16 @@ $(function () {
     });
 });
 
-
+   navigator.mediaDevices.enumerateDevices().then(function(devices) { // 成功時
+     devices.forEach(function(device) {
+       if (device.kind == 'videoinput') {
+          console.log(device.deviceId);
+          $(".scan-message").hide();
+          $(".scan-area").show();
+          $('#selectCamera').append("<option>").html(device.label).val(device.deviceId);
+       }
+      });
+    });
 
 
 const startScanner = () => {
