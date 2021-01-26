@@ -22,7 +22,6 @@
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
     <link rel="stylesheet" href="./css/custom.css">
-    <link rel="stylesheet" href="./css/barcode.css">
     <!-- PWA
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="manifest" href="manifest.json">
@@ -44,11 +43,7 @@
 </head>
 
 <body>
-<div id="container">
-
-
-    <p>Get available audio, video sources and audio output devices from <code>mediaDevices.enumerateDevices()</code>
-        then set the source for <code>getUserMedia()</code> using a <code>deviceId</code> constraint.</p>
+<div id="container" class="container">
 
     <div class="select">
         <label for="videoSource">Video source: </label><select id="videoSource"></select>
