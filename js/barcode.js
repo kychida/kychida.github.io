@@ -19,7 +19,7 @@ $(function () {
           console.log(device.deviceId);
           $(".scan-message").hide();
           $(".scan-area").show();
-          $('#selectCamera').append("<option>").html(device.label).val(device.deviceId);
+          $('#selectCamera').append($("<option>").val(device.deviceId).text(device.label));
        }
       });
     });
