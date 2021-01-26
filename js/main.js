@@ -1,11 +1,3 @@
-/*
-*  Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
-*
-*  Use of this source code is governed by a BSD-style license
-*  that can be found in the LICENSE file in the root of the source
-*  tree.
-*/
-
 'use strict';
 
 const videoElement = document.querySelector('video');
@@ -13,7 +5,6 @@ const videoSelect = document.querySelector('select#videoSource');
 const selectors = [videoSelect];
 
 function gotDevices(deviceInfos) {
-  // Handles being called several times to update labels. Preserve values.
   const values = selectors.map(select => select.value);
   selectors.forEach(select => {
     while (select.firstChild) {
@@ -25,6 +16,7 @@ function gotDevices(deviceInfos) {
     const option = document.createElement('option');
     option.value = deviceInfo.deviceId;
     if (deviceInfo.kind === 'videoinput') {
+      document.querySelector('div.select').appendChild(deviceInfo.deviceId);
       option.text = deviceInfo.label || `camera ${videoSelect.length + 1}`;
       videoSelect.appendChild(option);
     } else {
@@ -42,9 +34,8 @@ navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
 
 
 function gotStream(stream) {
-  window.stream = stream; // make stream available to console
+  window.stream = stream;
   videoElement.srcObject = stream;
-  // Refresh button list in case labels have become available
   return navigator.mediaDevices.enumerateDevices();
 }
 
@@ -66,5 +57,4 @@ function start() {
 }
 
 videoSelect.onchange = start;
-
 start();
