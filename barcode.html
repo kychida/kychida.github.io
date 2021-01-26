@@ -78,11 +78,13 @@
             if (device.kind == 'videoinput') {
                videoCount = videoCount + 1;
                $(".scan-message").hide();
+               $(".scan-area").show();
+               $("#selectCamera").hide();
             }
            });
           
           if (videoCount > 1) {
-              $(".scan-area").show();
+              $("#selectCamera").show();
           }
           devices.forEach(function(device) {
             // デバイスごとの処理
