@@ -29,20 +29,10 @@
 
     <base target="_blank">
 
-    <title>Select audio and video sources</title>
-
-    <link rel="icon" sizes="192x192" href="../../../images/webrtc-icon-192x192.png">
-    <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="../../../css/main.css">
-
     <style>
         div.select {
             display: inline-block;
             margin: 0 0 1em 0;
-        }
-
-        p.small {
-            font-size: 0.7em;
         }
 
         label {
@@ -59,14 +49,6 @@
 
     <p>Get available audio, video sources and audio output devices from <code>mediaDevices.enumerateDevices()</code>
         then set the source for <code>getUserMedia()</code> using a <code>deviceId</code> constraint.</p>
-
-    <div class="select">
-        <label for="audioSource">Audio input source: </label><select id="audioSource"></select>
-    </div>
-
-    <div class="select">
-        <label for="audioOutput">Audio output destination: </label><select id="audioOutput"></select>
-    </div>
 
     <div class="select">
         <label for="videoSource">Video source: </label><select id="videoSource"></select>
