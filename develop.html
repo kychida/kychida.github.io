@@ -56,7 +56,7 @@
         </ul>
         <br>
         <a class="button" style="width:200px; background-color:orange;" href="./barcode.html">バーコード読取（２）</a>
-        <select id="selectCamera" v-model="selected" v-on:change="updateValue"></select>
+        <select id="selectCamera" v-model="selected" v-on:change="updateValue"><option value="nonselected"></option></select>
         <ul>
           <li>QuaggaJS</li>
           <li>Android/iOS(Safari)など</li>
@@ -104,7 +104,7 @@
               if (ca == null) {
                 console.log("unselected");
               } else {
-                console.log("asdf");
+                console.log("selected item:" + ca);
                 $('#selectCamera').val(ca);
               }
             },
