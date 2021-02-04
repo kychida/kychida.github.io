@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- Basic Page Needs
+     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="UTF-8">
+    <title>PWA sample</title>
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <!-- Apple
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="pwa sample">
+    <link rel="apple-touch-icon" href="./images/icons/icon-72x72.png" sizes="72x72">
+    <link rel="apple-touch-icon" href="./images/icons/icon-114x114.png" sizes="114x114">
+    <link rel="apple-touch-icon" href="./images/icons/icon-120x120.png" sizes="120x120">
+    <link rel="apple-touch-icon" href="./images/icons/icon-144x144.png" sizes="144x144">
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <link rel="stylesheet" href="./css/custom.css">
+    <!-- PWA
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="manifest" href="manifest.json">
+</head>
+
+
+<body>
+
+    <header>
+     <div class="header-container">
+      <div class="container">
+        <h1 class="title">PWA sample</h1>
+        <!--<h2 class="subtitle">TOP</h2>-->
+      </div>
+     </div>
+      <div class="container">
+      <nav>
+        <ul class="breadcrumb">
+          <li><a href="./index.html">HOME</a></li>
+          <li class="current">開発項目</li>
+        </ul>
+      </nav>
+      </div>
+    </header>
+    
+    <article class="container" id="app">
+      <section>
+       <br>
+        <a class="button" style="width:200px; background-color:orange;" href="./shape.html">バーコード読取（１）</a>
+        <ul>
+          <li>Shape Detection API</li>
+          <li>Android Only</li>
+        </ul>
+        <br>
+        <a class="button" style="width:200px; background-color:orange;" href="./barcode.html">バーコード読取（２）</a>
+        <select id="selectCamera"></select>
+        <ul>
+          <li>QuaggaJS</li>
+          <li>Android/iOS(Safari)など</li>
+        </ul>
+        
+        <br>
+        <a class="button" style="width:200px; background-color:orange;" href="./barcode3.html">バーコード読取（３）</a>
+        <ul>
+          <li>QuaggaJS</li>
+          <li>カメラ表示大き目</li>
+        </ul>
+        <br>
+        <a class="button" style="width:200px; background-color:orange;" href="./barcode2.html">カメラ切り替え</a>
+
+    </article>
+    <br>
+    <article class="container">
+        <footer class="footer">
+          <p>Copyright 2021</p>
+        </footer>
+    </article>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+      .then((reg) => {
+        console.log('Service worker registered.', reg);
+      });
+}
+</script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./js/app.js"></script>
+    <script>   navigator.mediaDevices.enumerateDevices().then(function(devices) { // 成功時
+     devices.forEach(function(device) {
+       if (device.kind === 'videoinput') {
+          console.log(device.deviceId);
+          $(".scan-message").hide();
+          $(".scan-area").show();
+          $('#selectCamera').append($("<option>").val(device.deviceId).text(device.label || `camera 1`));
+       }
+      });
+    });</script>
+    
+</body>
+</html>
