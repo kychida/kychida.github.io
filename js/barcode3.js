@@ -95,48 +95,5 @@ const startScanner = () => {
   
     });
     
-    Quagga.onProcessed(function (result) {
-        var drawingCtx = Quagga.canvas.ctx.overlay,
-            drawingCanvas = Quagga.canvas.dom.overlay;
 
-        if (result) {
-            // 検出中の緑の枠線
-            if (result.boxes) {
-                drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute("width")), parseInt(drawingCanvas.getAttribute("height")));
-                result.boxes.filter(function (box) {
-                    return box !== result.box;
-                }).forEach(function (box) {
-                    Quagga.ImageDebug.drawPath(box, {
-                        x: 0,
-                        y: 1
-                    }, drawingCtx, {
-                        color: "green",
-                        lineWidth: 2
-                    });
-                });
-            }
-            
-            // 検出成功時の青の枠線
-            if (result.box) {
-                Quagga.ImageDebug.drawPath(result.box, {
-                    x: 0,
-                    y: 1
-                }, drawingCtx, {
-                    color: "blue",
-                    lineWidth: 2
-                });
-            }
-            
-            // 検出に成功した瞬間の水平の赤い線
-            if (result.codeResult && result.codeResult.code) {
-                Quagga.ImageDebug.drawPath(result.line, {
-                    x: 'x',
-                    y: 'y'
-                }, drawingCtx, {
-                    color: 'red',
-                    lineWidth: 3
-                });
-            }
-        }
-    });
 }
