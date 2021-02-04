@@ -1,5 +1,13 @@
 $(function () {
     $(".scan-area").hide();
+    
+    var ca = localStorage.getItem('chooseCamera');
+    if (ca == null) {
+       console.log("unselected");
+    } else {
+      console.log("asdf");
+      $('#selectCamera').val(ca);
+    }
 
     $('#scan-start').on('click', function() {
       $("#scan-result").text("");
