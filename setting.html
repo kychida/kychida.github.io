@@ -59,13 +59,17 @@
             <input type="email" name="loginid" v-model="vLoginid" placeholder="ID" width="32"><br>
             <label>パスワード</label>
             <input type="password" v-model="vPassword"><br>
-            <button class="button-primary" v-on:click="submitAccountSetting">SUBMIT</button>
+            <button class="button-primary" v-on:click="submitAccountSetting">登録</button>
             
-            <label>No</label>
+            <!--<label>シリアル番号</label>
+            <p>
+            当Webサイトの利用にあたっては、シリアル番号（8桁）の入力が必要です。<br>
+            シリアル番号がわからない方は、貴社本部ご担当までお問い合わせください。
+            </p>
             <input type="text" v-model="vNoText"><br>
             <label>URL</label>
             <input type="url" size="60"  v-model="vBaseUrl" placeholder="URL"><br>
-            <button class="button-primary" v-on:click="submitSetting">SUBMIT</button>
+            <button class="button-primary" v-on:click="submitSetting">登録</button>-->
         </section>
     </article>
 
