@@ -56,7 +56,7 @@
         </ul>
         <br>
         <a class="button" style="width:200px; background-color:orange;" href="./barcode.html">バーコード読取（２）</a>
-        <select id="selectCamera" v-model="selected" v-on:change="updateValue"><option value="nonselected"></option></select>
+        <select id="selectCamera" v-model="selected" v-on:change="updateValue"><option value="nonselected">1</option><option value="nonselected2">2</option></select>
         <ul>
           <li>QuaggaJS</li>
           <li>Android/iOS(Safari)など</li>
@@ -98,7 +98,7 @@
             data :{
                    selected:"",
             },
-            mounted : function(){
+            computed : function(){
               console.log('mounted')
               var ca = localStorage.getItem('chooseCamera');
               if (ca == null) {
