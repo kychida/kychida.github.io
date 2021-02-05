@@ -83,15 +83,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>   
-     navigator.mediaDevices.enumerateDevices().then(function(devices) { // 成功時
-     devices.forEach(function(device) {
-       if (device.kind === 'videoinput') {
-          console.log(device.deviceId);
-          $('#selectCamera').append($("<option>").val(device.deviceId).text(device.label || `camera 1`));
-          $('#selectCamera').show();
-       }
-      });
-      });
+
       
       
      var app = new Vue({
@@ -100,6 +92,15 @@
                    selected:"",
             },
             mounted() {
+                 navigator.mediaDevices.enumerateDevices().then(function(devices) { // 成功時
+     devices.forEach(function(device) {
+       if (device.kind === 'videoinput') {
+          console.log(device.deviceId);
+          $('#selectCamera').append($("<option>").val(device.deviceId).text(device.label || `camera 1`));
+          $('#selectCamera').show();
+       }
+      });
+      });
                 console.log('mounted');
                 var ca = localStorage.getItem('chooseCamera');
                 if (ca == null) {
