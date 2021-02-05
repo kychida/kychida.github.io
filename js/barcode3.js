@@ -13,12 +13,13 @@ $(function () {
       Quagga.offProcessed(this.onProcessed)
       Quagga.offDetected(this.onDetected)
       Quagga.stop();
+      constraints = {facingMode: "environment", deviceId: $('#selectCamera option:selected').val()};
        $("#scan-result").text("");
        startScanner();
     });
     
     var cnt = $('#selectCamera').children().length;
-    var chooseCameraList = localStorage.getItem('chooseCameraList');
+    
     if (chooseCameraList == "true") {
         $('#selectCamera').show();
          console.log("a");
@@ -27,6 +28,7 @@ $(function () {
     }
 });
 
+var chooseCameraList = localStorage.getItem('chooseCameraList');
 var ca = localStorage.getItem('chooseCamera');
 
    navigator.mediaDevices.enumerateDevices().then(function(devices) { // 成功時
@@ -44,16 +46,21 @@ var ca = localStorage.getItem('chooseCamera');
       });
     });
     
+
+var constraints = "";
+if (chooseCameraList == 'true') {
+  constraints = {facingMode: "environment", deviceId: $('#selectCamera option:selected').val()};
+} else {
+  constraints = {facingMode: "environment"};
+}
+console.log(constraints);
 const startScanner = () => {
     Quagga.init({
         inputStream: {
             name: "Live",
             type: "LiveStream",
             target: document.querySelector('#photo-area'),
-            constraints: {
-                facingMode: "environment",
-                deviceId: $('#selectCamera option:selected').val(),
-            },
+            constraints: constraints,
         },
         // 解析するワーカ数の設定
         numOfWorkers: navigator.hardwareConcurrency || 4,
