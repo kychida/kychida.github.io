@@ -56,7 +56,8 @@
         </ul>
         <br>
         <a class="button" style="width:200px; background-color:orange;" href="./barcode.html">バーコード読取（２）</a>
-        <select id="selectCamera" v-model="selected" v-on:change="updateValue"><option value="nonselected">1</option><option value="nonselected2">2</option></select>
+        <!--<select id="selectCamera2" v-model="selected" v-on:change="updateValue"><option value="nonselected">1</option><option value="nonselected2">2</option></select>-->
+        <select id="selectCamera"><option value="nonselected">1</option><option value="nonselected2">2</option></select>
         <ul>
           <li>QuaggaJS</li>
           <li>Android/iOS(Safari)など</li>
@@ -82,44 +83,50 @@
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script>   
+    <script>
+          updateCameraList();
+           $(function(){ 
+           
+               var ca = localStorage.getItem('chooseCamera');
+               if (ca == null) {
+                 console.log("unselected");
+               } else {
+                 console.log("selected item:" + ca);
+                 this.selected = ca;
+               }
+            
+               $('#selectCamera').change(function() {
+                   console.log( $(this).val() );
+                   localStorage.setItem('chooseCamera', $(this).val());
+                });
+           });
 
-      
-      
-     var app = new Vue({
-            el: '#app',
-            data :{
-                   selected:"",
-            },
-            mounted() {
-                 navigator.mediaDevices.enumerateDevices().then(function(devices) { // 成功時
-     devices.forEach(function(device) {
-       if (device.kind === 'videoinput') {
-          console.log(device.deviceId);
-          $('#selectCamera').append($("<option>").val(device.deviceId).text(device.label || `camera 1`));
-          $('#selectCamera').show();
-       }
-      });
-      });
-                console.log('mounted');
-                var ca = localStorage.getItem('chooseCamera');
-                if (ca == null) {
-                  console.log("unselected");
-                } else {
-                  console.log("selected item:" + ca);
-                  this.selected = ca;
+
+             //なにかしらの処理
+              navigator.mediaDevices.enumerateDevices().then(function(devices) { // 成功時
+              devices.forEach(function(device) {
+                if (device.kind === 'videoinput') {
+                   console.log(device.deviceId);
+                   $('#selectCamera').append($("<option>").val(device.deviceId).text(device.label || `camera 1`));
+                   $('#selectCamera').show();
                 }
-            },
-            methods: {
-                updateValue:function() {
-                  console.log("choose camera:" + this.selected);
-                  localStorage.setItem('chooseCamera', this.selected);
-                  alert(localStorage.getItem('chooseCamera'));
-                },
               }
-              
-          });
+           }
+           
+
+function updateCameraList(cameras) {
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+    .then(stream => {
+        console.log('Got MediaStream:', stream);
+        //$('#selectCamera').append($("<option>").val(device.deviceId).text(device.label || `camera 1`));
+    })
+    .catch(error => {
+        console.log('err');
+    })
+    }
+           
       </script>
+      
     
 </body>
 </html>
