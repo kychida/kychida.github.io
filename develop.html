@@ -113,7 +113,7 @@
                 updateValue:function() {
                   console.log("choose camera:" + this.selected);
                   localStorage.setItem('chooseCamera', this.selected);
-                  alert(this.selected);
+                  alert(localStorage.getItem('chooseCamera'));
                 },
               }
               
