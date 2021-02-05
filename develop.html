@@ -101,15 +101,17 @@
                 });
            });
            
-function updateCameraList(cameras) {
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-    .then(stream => {
-        console.log('Got MediaStream:', stream);
-        //$('#selectCamera').append($("<option>").val(device.deviceId).text(device.label || `camera 1`));
-    })
-    .catch(error => {
-        console.log('err');
-    })
+function updateCameraList() {
+     console.log('UPDATE CAMERA');
+     navigator.mediaDevices.enumerateDevices().then(function(devices) { // 成功時
+     devices.forEach(function(device) {
+       if (device.kind === 'videoinput') {
+          console.log(device.deviceId);
+          $('#selectCamera').append($("<option>").val(device.deviceId).text(device.label || `camera 1`));
+          $('#selectCamera').show();
+       }
+      });
+      });
     }
            
       </script>
