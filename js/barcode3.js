@@ -21,6 +21,9 @@ $(function () {
     var chooseCameraList = localStorage.getItem('chooseCameraList');
     if (chooseCameraList == true) {
         $('#selectCamera').show();
+         console.log("a");
+    } else {
+      console.log("b");
     }
 });
 
