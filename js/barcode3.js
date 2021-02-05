@@ -19,7 +19,7 @@ $(function () {
     
     var cnt = $('#selectCamera').children().length;
     var chooseCameraList = localStorage.getItem('chooseCameraList');
-    if (chooseCameraList == true) {
+    if (chooseCameraList == "true") {
         $('#selectCamera').show();
          console.log("a");
     } else {
