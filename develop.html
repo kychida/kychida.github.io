@@ -57,7 +57,7 @@
         <br>
         <a class="button" style="width:200px; background-color:orange;" href="./barcode.html">バーコード読取（２）</a>
         <!--<select id="selectCamera2" v-model="selected" v-on:change="updateValue"><option value="nonselected">1</option><option value="nonselected2">2</option></select>-->
-        <select id="selectCamera"><option value="nonselected">1</option><option value="nonselected2">2</option></select>
+        <select id="selectCamera"></select>
         <ul>
           <li>QuaggaJS</li>
           <li>Android/iOS(Safari)など</li>
@@ -105,8 +105,11 @@ function updateCameraList() {
      devices.forEach(function(device) {
        if (device.kind === 'videoinput') {
           console.log(device.deviceId);
-          $('#selectCamera').append($("<option>").val(device.deviceId).text(device.label || `camera 1`).prop("selected", true));
-          $('#selectCamera').show();
+          if (device.deviceId === ca) {
+              $('#selectCamera').append($("<option>").val(device.deviceId).text(device.label || `camera 1`).prop("selected", true));
+          } else { 
+              $('#selectCamera').append($("<option>").val(device.deviceId).text(device.label || `camera 1`));
+          }
        }
       });
       });

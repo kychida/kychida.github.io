@@ -1,10 +1,16 @@
+var ca = localStorage.getItem('chooseCamera');
+
    navigator.mediaDevices.enumerateDevices().then(function(devices) { // 成功時
      devices.forEach(function(device) {
        if (device.kind === 'videoinput') {
           console.log(device.deviceId);
           $(".scan-message").hide();
           $(".scan-area").show();
-          $('#selectCamera').append($("<option>").val(device.deviceId).text(device.label || `camera 1`));
+          if (device.deviceId === ca) {
+              $('#selectCamera').append($("<option>").val(device.deviceId).text(device.label || `camera 1`).prop("selected", true));
+          } else { 
+             $('#selectCamera').append($("<option>").val(device.deviceId).text(device.label || `camera 1`));
+          }
        }
       });
     });
