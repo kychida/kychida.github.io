@@ -93,20 +93,21 @@
       });
       });
       
+      
      var app = new Vue({
             el: '#app',
             data :{
                    selected:"",
             },
-            computed : function(){
-              console.log('mounted')
-              var ca = localStorage.getItem('chooseCamera');
-              if (ca == null) {
-                console.log("unselected");
-              } else {
-                console.log("selected item:" + ca);
-                this.selected = ca;
-              }
+            mounted() {
+                console.log('mounted');
+                var ca = localStorage.getItem('chooseCamera');
+                if (ca == null) {
+                  console.log("unselected");
+                } else {
+                  console.log("selected item:" + ca);
+                  this.selected = ca;
+                }
             },
             methods: {
                 updateValue:function() {
