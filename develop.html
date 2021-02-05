@@ -68,6 +68,7 @@
         <ul>
           <li>QuaggaJS</li>
           <li>カメラ表示大き目</li>
+          <li><label><input type="checkbox" name="displayCameraList" id="displayCameraList" value="on">カメラリストを表示する</label>
         </ul>
         <br>
         <a class="button" style="width:200px; background-color:orange;" href="./barcode2.html">カメラ切り替え</a>
@@ -97,6 +98,11 @@
                $('#selectCamera').change(function() {
                    console.log( $(this).val() );
                    localStorage.setItem('chooseCamera', $(this).val());
+                });
+                
+                $('#displayCameraList').change(function() {
+                   console.log( $(this).prop('checked') );
+                   localStorage.setItem('chooseCameraList', $(this).prop('checked'));
                 });
            });
            

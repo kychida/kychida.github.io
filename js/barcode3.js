@@ -9,6 +9,7 @@ $(function () {
     });
     
     $('#selectCamera').on('change', function() {
+      localStorage.setItem('chooseCamera', $(this).val());
       Quagga.offProcessed(this.onProcessed)
       Quagga.offDetected(this.onDetected)
       Quagga.stop();
@@ -16,8 +17,11 @@ $(function () {
        startScanner();
     });
     
-    
-    
+    var cnt = $('#selectCamera').children().length;
+    var chooseCameraList = localStorage.getItem('chooseCameraList');
+    if (chooseCameraList == true) {
+        $('#selectCamera').show();
+    }
 });
 
 var ca = localStorage.getItem('chooseCamera');
