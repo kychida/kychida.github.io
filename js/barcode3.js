@@ -22,9 +22,10 @@ $(function () {
     
     if (chooseCameraList == "true") {
         $('#selectCamera').show();
-         console.log("a");
+         console.log("selectCamera a");
     } else {
-      console.log("b");
+    $('#selectCamera').hide();
+      console.log("selectCamera b");
     }
 });
 
@@ -49,6 +50,7 @@ var ca = localStorage.getItem('chooseCamera');
 
 var constraints = "";
 if (chooseCameraList == 'true') {
+  console.log("asdf");
   constraints = {facingMode: "environment", deviceId: $('#selectCamera option:selected').val()};
 } else {
   constraints = {facingMode: "environment"};
