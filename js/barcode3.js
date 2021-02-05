@@ -7,8 +7,36 @@ $(function () {
       Quagga.stop();
       window.location = "../index.html"
     });
+    
+    $('#selectCamera').on('change', function() {
+      Quagga.offProcessed(this.onProcessed)
+      Quagga.offDetected(this.onDetected)
+      Quagga.stop();
+       $("#scan-result").text("");
+       startScanner();
+    });
+    
+    
+    
 });
 
+var ca = localStorage.getItem('chooseCamera');
+
+   navigator.mediaDevices.enumerateDevices().then(function(devices) { // 成功時
+     devices.forEach(function(device) {
+       if (device.kind === 'videoinput') {
+          console.log(device.deviceId);
+          $(".scan-message").hide();
+          $(".scan-area").show();
+          if (device.deviceId === ca) {
+              $('#selectCamera').append($("<option>").val(device.deviceId).text(device.label || `camera 1`).prop("selected", true));
+          } else { 
+             $('#selectCamera').append($("<option>").val(device.deviceId).text(device.label || `camera 1`));
+          }
+       }
+      });
+    });
+    
 const startScanner = () => {
     Quagga.init({
         inputStream: {
@@ -17,6 +45,7 @@ const startScanner = () => {
             target: document.querySelector('#photo-area'),
             constraints: {
                 facingMode: "environment",
+                deviceId: $('#selectCamera option:selected').val(),
             },
         },
         // 解析するワーカ数の設定
