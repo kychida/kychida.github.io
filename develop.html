@@ -85,14 +85,13 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
           updateCameraList();
+          var ca = localStorage.getItem('chooseCamera');
            $(function(){ 
-           
-               var ca = localStorage.getItem('chooseCamera');
                if (ca == null) {
                  console.log("unselected");
                } else {
                  console.log("selected item:" + ca);
-                 this.selected = ca;
+                 $('#selectCamera').val(ca);
                }
             
                $('#selectCamera').change(function() {
@@ -102,12 +101,11 @@
            });
            
 function updateCameraList() {
-     console.log('UPDATE CAMERA');
      navigator.mediaDevices.enumerateDevices().then(function(devices) { // 成功時
      devices.forEach(function(device) {
        if (device.kind === 'videoinput') {
           console.log(device.deviceId);
-          $('#selectCamera').append($("<option>").val(device.deviceId).text(device.label || `camera 1`));
+          $('#selectCamera').append($("<option>").val(device.deviceId).text(device.label || `camera 1`).prop("selected", true));
           $('#selectCamera').show();
        }
       });
