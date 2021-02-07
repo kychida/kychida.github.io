@@ -23,7 +23,7 @@ $(function () {
     if (chooseCameraList == "true") {
         $('#selectCamera').show();
     } else {
-    $('#selectCamera').hide();
+        $('#selectCamera').hide();
     }
 });
 
@@ -47,6 +47,7 @@ var ca = localStorage.getItem('chooseCamera');
     
 
 var constraints = "";
+console.log("choose camera result:" + !ca);
 if (chooseCameraList == 'true' && !ca) {
   console.log("asdf");
   constraints = {facingMode: "environment", deviceId: ca};
