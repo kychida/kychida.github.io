@@ -56,8 +56,8 @@
         </ul>
         <br>
         <a class="button" style="width:200px; background-color:orange;" href="./barcode.html">バーコード読取（２）</a>
-        <!--<select id="selectCamera2" v-model="selected" v-on:change="updateValue"><option value="nonselected">1</option><option value="nonselected2">2</option></select>-->
-        <select id="selectCamera"></select>
+        <!--<select id="selectCamera2" v-model="selected" v-on:change="updateValue"><option value="nonselected">1</option><option value="nonselected2">2</option></select>
+        <select id="selectCamera"></select>-->
         <ul>
           <li>QuaggaJS</li>
           <li>Android/iOS(Safari)など</li>
@@ -87,12 +87,18 @@
     <script>
           updateCameraList();
           var ca = localStorage.getItem('chooseCamera');
+          var caChecked = localStorage.getItem('chooseCameraList');
+          
            $(function(){ 
                if (ca == null) {
                  console.log("unselected");
                } else {
                  console.log("selected item:" + ca);
                  $('#selectCamera').val(ca);
+               }
+               
+               if (caChecked == 'true') {
+                 $('#displayCameraList').prop('checked', true);
                }
             
                $('#selectCamera').change(function() {

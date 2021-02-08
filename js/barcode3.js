@@ -47,10 +47,7 @@ var ca = localStorage.getItem('chooseCamera');
     
 
 var constraints = "";
-console.log("choose camera result:" + (ca == null));
-console.log("device id" + ca);
 if (chooseCameraList == 'true' && (ca == null) == false) {
-  console.log("asdf");
   constraints = {facingMode: "environment", deviceId: ca};
 } else {
   constraints = {facingMode: "environment"};
