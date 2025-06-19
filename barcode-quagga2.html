@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- Basic Page Needs
+     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="UTF-8">
+    <title>Quagga2バーコード読み取り | PWA sample</title>
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Apple
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="pwa sample">
+    <meta id="theme-color" name="theme-color" content="#ffffff">
+    <link rel="apple-touch-icon" href="./images/icons/icon-72x72.png" sizes="72x72">
+    <link rel="apple-touch-icon" href="./images/icons/icon-114x114.png" sizes="114x114">
+    <link rel="apple-touch-icon" href="./images/icons/icon-120x120.png" sizes="120x120">
+    <link rel="apple-touch-icon" href="./images/icons/icon-144x144.png" sizes="144x144">
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <link rel="stylesheet" href="./css/custom.css">
+    <!-- PWA
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="./css/barcode-quagga.css">
+</head>
+
+<body>
+    <header>
+     <div class="header-container">
+      <div class="container">
+        <h1 class="title">PWA sample</h1>
+      </div>
+     </div>
+      <div class="container">
+      <nav>
+        <ul class="breadcrumb">
+          <li><a href="./index.html">HOME</a></li>
+          <li class="current">Quagga2バーコード読み取りサンプル</li>
+        </ul>
+      </nav>
+      </div>
+    </header>
+
+    <article class="container">
+        <h2>Quagga2バーコードスキャナー</h2>
+
+        <div id="sourceSelectPanel">
+            <label for="sourceSelect">カメラを選択: </label>
+            <select id="sourceSelect" style="max-width: 400px">
+                <option>カメラを選択してください</option>
+            </select>
+        </div>
+
+        <div id="video-container">
+            <div id="interactive" class="viewport"></div>
+        </div>
+
+        <div class="button-container">
+            <button id="startButton" class="button">スキャン開始</button>
+            <button id="stopButton" class="button">スキャン停止</button>
+            <button id="resetButton" class="button">リセット</button>
+        </div>
+
+        <div id="result">
+            <p>スキャン結果がここに表示されます</p>
+        </div>
+    </article>
+
+    <!-- Quagga2 Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@ericblade/quagga2/dist/quagga.min.js"></script>
+    <script src="js/barcode-quagga2.js"></script>
+</body>
+</html>
