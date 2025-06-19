@@ -1,0 +1,95 @@
+.container {
+    max-width: 100%;
+    padding: 10px;
+}
+
+#reader-container {
+    position: relative;
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+#reader {
+    width: 100%;
+    border: 1px solid #ddd;
+    min-height: 300px;
+}
+
+#result {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    min-height: 60px;
+}
+
+.button-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.button {
+    margin: 0;
+}
+
+/* Header styling */
+header {
+    margin-bottom: 20px;
+}
+
+.header-container {
+    background-color: #f5f5f5;
+    padding: 10px 0;
+    border-bottom: 1px solid #e1e1e1;
+}
+
+.title {
+    margin-bottom: 0;
+}
+
+.breadcrumb {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.breadcrumb li {
+    display: inline;
+}
+
+.breadcrumb li:not(:last-child):after {
+    content: " > ";
+    color: #999;
+}
+
+.breadcrumb li a {
+    text-decoration: none;
+    color: #0275d8;
+}
+
+.breadcrumb li.current {
+    color: #636c72;
+}
+
+/* Specific styles for html5-qrcode */
+#reader video {
+    max-width: 100%;
+    height: auto;
+}
+
+#reader__scan_region {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#reader__dashboard {
+    margin-top: 10px;
+}
+
+#reader__dashboard_section_csr button {
+    margin: 5px;
+}
