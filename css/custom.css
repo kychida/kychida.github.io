@@ -22,3 +22,7 @@
 .breadcrumb .current {
    font-weight:bold;
 }
+
+.menu li{
+  list-style: none;
+}
