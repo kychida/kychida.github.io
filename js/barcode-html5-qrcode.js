@@ -3,6 +3,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const html5QrCode = new Html5Qrcode("reader");
     let isScanning = false;
     let selectedDeviceId;
+    // スキャン結果を保存するバッファ
+    let scanBuffer = [];
+    // 必要な連続一致回数
+    const requiredMatches = 3;
 
     // カメラデバイスのリストを取得して選択肢に追加
     Html5Qrcode.getCameras().then(devices => {
@@ -56,14 +60,8 @@ document.addEventListener('DOMContentLoaded', function () {
         qrbox: { width: 250, height: 250 },
         aspectRatio: 1.0,
         formatsToSupport: [
-            Html5QrcodeSupportedFormats.QR_CODE,
             Html5QrcodeSupportedFormats.EAN_13,
-            Html5QrcodeSupportedFormats.EAN_8,
-            Html5QrcodeSupportedFormats.CODE_39,
-            Html5QrcodeSupportedFormats.CODE_93,
-            Html5QrcodeSupportedFormats.CODE_128,
-            Html5QrcodeSupportedFormats.UPC_A,
-            Html5QrcodeSupportedFormats.UPC_E
+            Html5QrcodeSupportedFormats.EAN_8
         ]
     };
 
@@ -73,22 +71,49 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // 結果を表示
         const resultElement = document.getElementById('result');
+
+        // スキャン結果をバッファに追加
+        scanBuffer.push(decodedText);
+
+        // 最新のスキャン結果を表示（一時的な表示）
         resultElement.innerHTML = `
-            <p><strong>スキャン結果:</strong> ${decodedText}</p>
+            <p><strong>スキャン中:</strong> ${decodedText}</p>
             <p><strong>フォーマット:</strong> ${decodedResult.result.format.formatName}</p>
+            <p><strong>読み取り回数:</strong> ${scanBuffer.length}/${requiredMatches}</p>
         `;
 
-        // 成功したらビープ音を鳴らす（オプション）
-        const beep = new Audio("data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU" + Array(1e3).join("123"));
-        beep.play();
+        // バッファ内のすべての値が同じかチェック
+        const allSame = scanBuffer.every(code => code === scanBuffer[0]);
 
-        // スキャンを停止（1回読み取ったら停止する場合）
-        stopScanning().then(() => {
-            resultElement.innerHTML += '<p>スキャンを停止しました。再開するには「スキャン開始」ボタンを押してください。</p>';
-        }).catch((err) => {
-            console.error(`スキャン停止エラー: ${err}`);
-            resultElement.innerHTML += '<p>スキャンを停止しました。再開するには「スキャン開始」ボタンを押してください。</p>';
-        });
+        // 必要な回数のスキャンが完了し、すべて同じ値の場合
+        if (scanBuffer.length >= requiredMatches && allSame) {
+            // 成功したらビープ音を鳴らす（オプション）
+            const beep = new Audio("data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU" + Array(1e3).join("123"));
+            beep.play();
+
+            // 最終結果を表示
+            resultElement.innerHTML = `
+                <p><strong>スキャン結果:</strong> ${decodedText}</p>
+                <p><strong>フォーマット:</strong> ${decodedResult.result.format.formatName}</p>
+                <p><strong>読み取り回数:</strong> ${scanBuffer.length}/${requiredMatches} (一致)</p>
+            `;
+
+            // スキャンを停止
+            stopScanning().then(() => {
+                resultElement.innerHTML += '<p>スキャンを停止しました。再開するには「スキャン開始」ボタンを押してください。</p>';
+            }).catch((err) => {
+                console.error(`スキャン停止エラー: ${err}`);
+                resultElement.innerHTML += '<p>スキャンを停止しました。再開するには「スキャン開始」ボタンを押してください。</p>';
+            });
+        } else if (scanBuffer.length > 1 && !allSame) {
+            // 一致しない結果があった場合、最新の結果だけを残してバッファをリセット
+            scanBuffer = [decodedText];
+            resultElement.innerHTML = `
+                <p><strong>スキャン中:</strong> ${decodedText}</p>
+                <p><strong>フォーマット:</strong> ${decodedResult.result.format.formatName}</p>
+                <p><strong>読み取り回数:</strong> ${scanBuffer.length}/${requiredMatches} (リセット)</p>
+            `;
+        }
     };
 
     // スキャンエラー時のコールバック
@@ -103,6 +128,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const resultElement = document.getElementById('result');
         resultElement.innerHTML = '<p>スキャン中...</p>';
+
+        // スキャンバッファをクリア
+        scanBuffer = [];
 
         // カメラの使用を開始
         const cameraConfig = selectedDeviceId 
@@ -127,6 +155,9 @@ document.addEventListener('DOMContentLoaded', function () {
     function stopScanning() {
         if (!isScanning) return Promise.resolve();
 
+        // スキャンバッファをクリア
+        scanBuffer = [];
+
         return html5QrCode.stop().then(() => {
             isScanning = false;
             console.log("スキャン停止");
@@ -138,6 +169,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // スキャンリセット関数
     function resetScanning() {
+        // スキャンバッファをクリア
+        scanBuffer = [];
+
         stopScanning().then(() => {
             document.getElementById('result').innerHTML = '<p>スキャン結果がここに表示されます</p>';
         }).catch((err) => {

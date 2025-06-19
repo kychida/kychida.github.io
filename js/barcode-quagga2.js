@@ -2,6 +2,10 @@ document.addEventListener('DOMContentLoaded', function () {
     let activeStream = null;
     let selectedDeviceId = null;
     let quaggaInitialized = false;
+    // スキャン結果を保存するバッファ
+    let scanBuffer = [];
+    // 必要な連続一致回数
+    const requiredMatches = 3;
 
     // カメラデバイスのリストを取得して選択肢に追加
     navigator.mediaDevices.enumerateDevices()
@@ -63,6 +67,9 @@ document.addEventListener('DOMContentLoaded', function () {
     function startScanning() {
         const resultElement = document.getElementById('result');
         resultElement.innerHTML = '<p>スキャン中...</p>';
+
+        // スキャンバッファをクリア
+        scanBuffer = [];
 
         if (quaggaInitialized) {
             Quagga.start();
@@ -135,24 +142,53 @@ document.addEventListener('DOMContentLoaded', function () {
             quaggaInitialized = true;
             Quagga.start();
 
+            // スキャンバッファをクリア
+            scanBuffer = [];
+
             // バーコードが検出されたときのイベントリスナー
             Quagga.onDetected(function(result) {
                 if (result && result.codeResult) {
                     console.log("バーコードを検出しました:", result.codeResult.code);
 
+                    // スキャン結果をバッファに追加
+                    scanBuffer.push(result.codeResult.code);
+
+                    // 最新のスキャン結果を表示（一時的な表示）
                     resultElement.innerHTML = `
-                        <p><strong>スキャン結果:</strong> ${result.codeResult.code}</p>
+                        <p><strong>スキャン中:</strong> ${result.codeResult.code}</p>
                         <p><strong>フォーマット:</strong> ${result.codeResult.format}</p>
+                        <p><strong>読み取り回数:</strong> ${scanBuffer.length}/${requiredMatches}</p>
                     `;
 
-                    // 成功したらビープ音を鳴らす（オプション）
-                    const beep = new Audio("data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU" + Array(1e3).join("123"));
-                    beep.play();
+                    // バッファ内のすべての値が同じかチェック
+                    const allSame = scanBuffer.every(code => code === scanBuffer[0]);
 
-                    // 1回読み取ったら停止する
-                    Quagga.stop();
-                    quaggaInitialized = false;
-                    resultElement.innerHTML += '<p>スキャンを停止しました。再開するには「スキャン開始」ボタンを押してください。</p>';
+                    // 必要な回数のスキャンが完了し、すべて同じ値の場合
+                    if (scanBuffer.length >= requiredMatches && allSame) {
+                        // 成功したらビープ音を鳴らす（オプション）
+                        const beep = new Audio("data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU" + Array(1e3).join("123"));
+                        beep.play();
+
+                        // 最終結果を表示
+                        resultElement.innerHTML = `
+                            <p><strong>スキャン結果:</strong> ${result.codeResult.code}</p>
+                            <p><strong>フォーマット:</strong> ${result.codeResult.format}</p>
+                            <p><strong>読み取り回数:</strong> ${scanBuffer.length}/${requiredMatches} (一致)</p>
+                        `;
+
+                        // スキャンを停止
+                        Quagga.stop();
+                        quaggaInitialized = false;
+                        resultElement.innerHTML += '<p>スキャンを停止しました。再開するには「スキャン開始」ボタンを押してください。</p>';
+                    } else if (scanBuffer.length > 1 && !allSame) {
+                        // 一致しない結果があった場合、最新の結果だけを残してバッファをリセット
+                        scanBuffer = [result.codeResult.code];
+                        resultElement.innerHTML = `
+                            <p><strong>スキャン中:</strong> ${result.codeResult.code}</p>
+                            <p><strong>フォーマット:</strong> ${result.codeResult.format}</p>
+                            <p><strong>読み取り回数:</strong> ${scanBuffer.length}/${requiredMatches} (リセット)</p>
+                        `;
+                    }
                 }
             });
 
@@ -199,6 +235,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 activeStream = null;
             }
 
+            // スキャンバッファをクリア
+            scanBuffer = [];
+
             const resultElement = document.getElementById('result');
             // 既存の結果を保持しつつ、停止メッセージを追加
             if (resultElement.innerHTML.indexOf('スキャン中...') !== -1) {
@@ -224,6 +263,8 @@ document.addEventListener('DOMContentLoaded', function () {
             activeStream = null;
         }
 
+        // スキャンバッファをクリア
+        scanBuffer = [];
         document.getElementById('result').innerHTML = '<p>スキャン結果がここに表示されます</p>';
     }
 

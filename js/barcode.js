@@ -14,10 +14,10 @@ var ca = localStorage.getItem('chooseCamera');
        }
       });
     });
-    
+
 $(function () {
     $(".scan-area").hide();
-    
+
     var ca = localStorage.getItem('chooseCamera');
     if (ca == null) {
        console.log("unselected");
@@ -56,7 +56,7 @@ const startScanner = () => {
         numOfWorkers: navigator.hardwareConcurrency || 4,
         // バーコードの種類を設定
         decoder: {
-          readers: ["code_128_reader","ean_reader", "ean_8_reader"],
+          readers: ["ean_reader", "ean_8_reader"],
           multiple: false,  //同時に複数のバーコードを解析しない
           },
     }, function (err) {
@@ -80,7 +80,7 @@ const startScanner = () => {
       return arr[half]
       return (arr[half - 1] + arr[half]) / 2.0
     }
-    
+
     let codes = []
     const success_num = 1;
     Quagga.onDetected(function (result) {
@@ -125,9 +125,9 @@ const startScanner = () => {
        //Quagga.offDetected(this.onDetected)
        //Quagga.offProcessed(_onProcessed)
        //Quagga.offDetected(_onDetected)
-  
+
     });
-    
+
     Quagga.onProcessed(function (result) {
         var drawingCtx = Quagga.canvas.ctx.overlay,
             drawingCanvas = Quagga.canvas.dom.overlay;
@@ -148,7 +148,7 @@ const startScanner = () => {
                     });
                 });
             }
-            
+
             // 検出成功時の青の枠線
             if (result.box) {
                 Quagga.ImageDebug.drawPath(result.box, {
@@ -159,7 +159,7 @@ const startScanner = () => {
                     lineWidth: 2
                 });
             }
-            
+
             // 検出に成功した瞬間の水平の赤い線
             if (result.codeResult && result.codeResult.code) {
                 Quagga.ImageDebug.drawPath(result.line, {

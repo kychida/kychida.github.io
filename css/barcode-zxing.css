@@ -16,8 +16,29 @@
     border: 1px solid #ddd;
 }
 
-#sourceSelectPanel {
+#sourceSelectPanel, #formatSelectPanel {
     margin-bottom: 20px;
+}
+
+#formatSelectPanel p {
+    margin-bottom: 10px;
+}
+
+.format-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.format-options label {
+    margin-right: 15px;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.format-options input[type="checkbox"] {
+    margin-right: 5px;
 }
 
 #result {
