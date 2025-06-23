@@ -87,9 +87,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // 必要な回数のスキャンが完了し、すべて同じ値の場合
         if (scanBuffer.length >= requiredMatches && allSame) {
-            // 成功したらビープ音を鳴らす（オプション）
-            const beep = new Audio("data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU" + Array(1e3).join("123"));
-            beep.play();
 
             // 最終結果を表示
             resultElement.innerHTML = `
