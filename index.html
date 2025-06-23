@@ -77,6 +77,17 @@ if ('serviceWorker' in navigator) {
         console.log('Service worker registered.', reg);
       });
 }
+
+window.onload = function() {
+    navigator.mediaDevices.enumerateDevices().then((devices) => {
+        console.log(devices);
+        const vDevices = devices.filter(device => device.kind === 'videoinput');
+        console.log("有効カメラ数：" + vDevices.length)
+        vDevices.forEach((device) => {
+            console.log(device.label + " [" + device.deviceId + "]")
+        });
+    });
+};
 </script>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
