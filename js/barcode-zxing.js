@@ -67,6 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
             sourceSelect.addEventListener('change', function() {
                 selectedDeviceId = sourceSelect.value;
                 resetScanning();
+                startScanning();
             });
 
             // フォーマット選択が変更されたときの処理
