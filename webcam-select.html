@@ -35,6 +35,27 @@
             max-width: 400px;
             margin-bottom: 20px;
         }
+        #camera-list {
+            margin: 20px 0;
+            padding: 0;
+            list-style: none;
+        }
+        #camera-list li {
+            padding: 10px;
+            margin-bottom: 5px;
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        #camera-list li:hover {
+            background-color: #e9e9e9;
+        }
+        #camera-list li.selected {
+            background-color: #dff0d8;
+            border-color: #3c763d;
+        }
         .status-message {
             margin: 10px 0;
             padding: 10px;
@@ -74,6 +95,8 @@
         <div id="camera-container">
             <label for="camera-select">カメラを選択:</label>
             <select id="camera-select" class="u-full-width"></select>
+            <h3>利用可能なカメラ一覧:</h3>
+            <ul id="camera-list"></ul>
             <div id="status-message"></div>
         </div>
     </article>
@@ -81,62 +104,94 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const cameraSelect = document.getElementById('camera-select');
+            const cameraList = document.getElementById('camera-list');
             const statusMessage = document.getElementById('status-message');
 
             // 利用可能なカメラを取得して選択肢に追加
-            async function getCameras() {
-                try {
-                    const devices = await navigator.mediaDevices.enumerateDevices();
-                    const videoDevices = devices.filter(device => device.kind === 'videoinput');
+            function getCameras() {
+                // getUserMedia()を使用してカメラへのアクセス許可を取得
+                // これにより、デバイスのラベルが取得可能になる
+                const getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || 
+                                    navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
-                    // 選択肢をクリア
-                    cameraSelect.innerHTML = '';
-
-                    if (videoDevices.length === 0) {
-                        showStatus('カメラが見つかりませんでした。', 'error');
-                        return;
-                    }
-
-                    // カメラリストを追加
-                    videoDevices.forEach(device => {
-                        const option = document.createElement('option');
-                        option.value = device.deviceId;
-                        option.text = device.label || `カメラ ${videoDevices.indexOf(device) + 1}`;
-                        cameraSelect.appendChild(option);
-                    });
-
-                    // 保存されたカメラがあれば選択
-                    const savedCameraId = localStorage.getItem('selectedCameraId');
-                    if (savedCameraId) {
-                        // 保存されたカメラIDが選択肢にあるか確認
-                        const exists = Array.from(cameraSelect.options).some(option => option.value === savedCameraId);
-                        if (exists) {
-                            cameraSelect.value = savedCameraId;
-                        }
-                    }
-
-                    showStatus(`${videoDevices.length}台のカメラが見つかりました。`, 'success');
-                } catch (error) {
-                    console.error('カメラの取得に失敗しました:', error);
-                    showStatus('カメラの取得に失敗しました: ' + error.message, 'error');
-                }
-            }
-
-            // 選択を保存
-            function saveSelection() {
-                const deviceId = cameraSelect.value;
-                const deviceLabel = cameraSelect.options[cameraSelect.selectedIndex].text;
-
-                if (!deviceId) {
-                    showStatus('カメラが選択されていません。', 'error');
+                if (!getUserMedia) {
+                    showStatus('お使いのブラウザはgetUserMediaをサポートしていません。', 'error');
                     return;
                 }
 
-                // LocalStorageに保存
-                localStorage.setItem('selectedCameraId', deviceId);
-                localStorage.setItem('selectedCameraLabel', deviceLabel);
+                // カメラへのアクセス許可を要求
+                getUserMedia(
+                    { video: true, audio: false },
+                    function(stream) {
+                        // ストリームを停止
+                        const tracks = stream.getTracks();
+                        tracks.forEach(track => track.stop());
 
-                showStatus('カメラ設定を保存しました。', 'success');
+                        // デバイス一覧を取得
+                        navigator.mediaDevices.enumerateDevices()
+                            .then(devices => {
+                                const videoDevices = devices.filter(device => device.kind === 'videoinput');
+
+                                // 選択肢をクリア
+                                cameraSelect.innerHTML = '';
+                                cameraList.innerHTML = '';
+
+                                if (videoDevices.length === 0) {
+                                    showStatus('カメラが見つかりませんでした。', 'error');
+                                    return;
+                                }
+
+                                // カメラリストを追加
+                                videoDevices.forEach(device => {
+                                    // ドロップダウンに追加
+                                    const option = document.createElement('option');
+                                    option.value = device.deviceId;
+                                    option.text = device.label || `カメラ ${videoDevices.indexOf(device) + 1}`;
+                                    cameraSelect.appendChild(option);
+
+                                    // リスト表示に追加
+                                    const listItem = document.createElement('li');
+                                    listItem.textContent = device.label || `カメラ ${videoDevices.indexOf(device) + 1}`;
+                                    listItem.dataset.deviceId = device.deviceId;
+                                    // リストアイテムがクリックされたときの処理
+                                    listItem.addEventListener('click', function() {
+                                        // ドロップダウンの選択を更新
+                                        cameraSelect.value = device.deviceId;
+                                        // 選択状態を更新
+                                        updateSelectedCamera(device.deviceId);
+                                        // ローカルストレージに保存
+                                        localStorage.setItem('selectedCameraId', device.deviceId);
+                                    });
+                                    cameraList.appendChild(listItem);
+                                });
+
+                                // 保存されたカメラがあれば選択
+                                const savedCameraId = localStorage.getItem('selectedCameraId');
+                                if (savedCameraId) {
+                                    // 保存されたカメラIDが選択肢にあるか確認
+                                    const exists = Array.from(cameraSelect.options).some(option => option.value === savedCameraId);
+                                    if (exists) {
+                                        cameraSelect.value = savedCameraId;
+                                        // リスト表示も更新
+                                        updateSelectedCamera(savedCameraId);
+                                    }
+                                } else if (videoDevices.length > 0) {
+                                    // デフォルトで最初のカメラを選択
+                                    updateSelectedCamera(videoDevices[0].deviceId);
+                                }
+
+                                showStatus(`${videoDevices.length}台のカメラが見つかりました。`, 'success');
+                            })
+                            .catch(error => {
+                                console.error('カメラの取得に失敗しました:', error);
+                                showStatus('カメラの取得に失敗しました: ' + error.message, 'error');
+                            });
+                    },
+                    function(error) {
+                        console.error('カメラへのアクセスが拒否されました:', error);
+                        showStatus('カメラへのアクセスが拒否されました: ' + error.message, 'error');
+                    }
+                );
             }
 
             // ステータスメッセージを表示
@@ -145,9 +200,28 @@
                 statusMessage.className = 'status-message ' + type;
             }
 
-            // カメラ選択が変更されたとき
+            // 選択されたカメラを視覚的に表示
+            function updateSelectedCamera(deviceId) {
+                // リスト内のすべての項目から選択状態を削除
+                const listItems = cameraList.querySelectorAll('li');
+                listItems.forEach(item => {
+                    item.classList.remove('selected');
+                });
+
+                // 選択されたデバイスIDに一致する項目に選択状態を追加
+                const selectedItem = cameraList.querySelector(`li[data-device-id="${deviceId}"]`);
+                if (selectedItem) {
+                    selectedItem.classList.add('selected');
+                }
+            }
+
+            // ドロップダウンの選択が変更されたときの処理
             cameraSelect.addEventListener('change', function() {
-                saveSelection(); // 選択が変更されたら自動的に保存
+                const selectedDeviceId = this.value;
+                // 選択状態を更新
+                updateSelectedCamera(selectedDeviceId);
+                // ローカルストレージに保存
+                localStorage.setItem('selectedCameraId', selectedDeviceId);
             });
 
             // ページ読み込み時に実行
