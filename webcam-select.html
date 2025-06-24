@@ -156,24 +156,13 @@
                                 cameraSelect.value = device.deviceId;
                                 // 選択状態を更新
                                 updateSelectedCamera(device.deviceId);
-                                // ローカルストレージに保存
-                                localStorage.setItem('selectedCameraId', device.deviceId);
                             });
                             cameraList.appendChild(listItem);
                         });
 
-                        // 保存されたカメラがあれば選択
-                        const savedCameraId = localStorage.getItem('selectedCameraId');
-                        if (savedCameraId) {
-                            // 保存されたカメラIDが選択肢にあるか確認
-                            const exists = Array.from(cameraSelect.options).some(option => option.value === savedCameraId);
-                            if (exists) {
-                                cameraSelect.value = savedCameraId;
-                                // リスト表示も更新
-                                updateSelectedCamera(savedCameraId);
-                            }
-                        } else if (videoDevices.length > 0) {
-                            // デフォルトで最初のカメラを選択
+                        // デフォルトで最初のカメラを選択
+                        if (videoDevices.length > 0) {
+                            cameraSelect.value = videoDevices[0].deviceId;
                             updateSelectedCamera(videoDevices[0].deviceId);
                         }
 
@@ -211,8 +200,6 @@
                 const selectedDeviceId = this.value;
                 // 選択状態を更新
                 updateSelectedCamera(selectedDeviceId);
-                // ローカルストレージに保存
-                localStorage.setItem('selectedCameraId', selectedDeviceId);
             });
 
             // ページ読み込み時に実行

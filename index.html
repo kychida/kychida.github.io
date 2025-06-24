@@ -81,14 +81,27 @@ if ('serviceWorker' in navigator) {
 }
 
 window.onload = function() {
-    navigator.mediaDevices.enumerateDevices().then((devices) => {
-        console.log(devices);
-        const vDevices = devices.filter(device => device.kind === 'videoinput');
-        console.log("有効カメラ数：" + vDevices.length)
-        vDevices.forEach((device) => {
-            console.log(device.label + " [" + device.deviceId + "]")
+    // カメラへのアクセス許可を要求
+    navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+        .then(stream => {
+            // ストリームを停止
+            const tracks = stream.getTracks();
+            tracks.forEach(track => track.stop());
+
+            // デバイス一覧を取得
+            return navigator.mediaDevices.enumerateDevices();
+        })
+        .then((devices) => {
+            console.log(devices);
+            const vDevices = devices.filter(device => device.kind === 'videoinput');
+            console.log("有効カメラ数：" + vDevices.length)
+            vDevices.forEach((device) => {
+                console.log(device.label + " [" + device.deviceId + "]")
+            });
+        })
+        .catch(error => {
+            console.error('カメラへのアクセスが拒否されました:', error);
         });
-    });
 };
 </script>
 

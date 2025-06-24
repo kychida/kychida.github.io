@@ -8,7 +8,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const requiredMatches = 3;
 
     // カメラデバイスのリストを取得して選択肢に追加
-    navigator.mediaDevices.enumerateDevices()
+    // カメラへのアクセス許可を要求
+    navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+        .then(stream => {
+            // ストリームを停止
+            const tracks = stream.getTracks();
+            tracks.forEach(track => track.stop());
+
+            // デバイス一覧を取得
+            return navigator.mediaDevices.enumerateDevices();
+        })
         .then((devices) => {
             const videoInputDevices = devices.filter(device => device.kind === 'videoinput');
             const sourceSelect = document.getElementById('sourceSelect');

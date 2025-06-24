@@ -38,7 +38,18 @@ function gotDevices(deviceInfos) {
   });
 }
 
-navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
+// カメラへのアクセス許可を要求
+navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+  .then(stream => {
+    // ストリームを停止
+    const tracks = stream.getTracks();
+    tracks.forEach(track => track.stop());
+
+    // デバイス一覧を取得
+    return navigator.mediaDevices.enumerateDevices();
+  })
+  .then(gotDevices)
+  .catch(handleError);
 
 
 function gotStream(stream) {
