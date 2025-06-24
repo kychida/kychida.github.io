@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- Basic Page Needs
+     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="UTF-8">
+    <title>Webカメラ選択 | PWA sample</title>
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Apple
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="pwa sample">
+    <meta id="theme-color" name="theme-color" content="#ffffff">
+    <link rel="apple-touch-icon" href="./images/icons/icon-72x72.png" sizes="72x72">
+    <link rel="apple-touch-icon" href="./images/icons/icon-114x114.png" sizes="114x114">
+    <link rel="apple-touch-icon" href="./images/icons/icon-120x120.png" sizes="120x120">
+    <link rel="apple-touch-icon" href="./images/icons/icon-144x144.png" sizes="144x144">
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <link rel="stylesheet" href="./css/custom.css">
+    <!-- PWA
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="manifest" href="manifest.json">
+
+    <style>
+        #camera-container {
+            margin: 20px 0;
+        }
+        #camera-select {
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 20px;
+        }
+        .status-message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .success {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+        .error {
+            background-color: #f2dede;
+            color: #a94442;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+     <div class="header-container">
+      <div class="container">
+        <h1 class="title">PWA sample</h1>
+      </div>
+     </div>
+      <div class="container">
+      <nav>
+        <ul class="breadcrumb">
+          <li><a href="./index.html">HOME</a></li>
+          <li class="current">Webカメラ選択</li>
+        </ul>
+      </nav>
+      </div>
+    </header>
+
+    <article class="container">
+        <h2>Webカメラ選択</h2>
+
+        <div id="camera-container">
+            <label for="camera-select">カメラを選択:</label>
+            <select id="camera-select" class="u-full-width"></select>
+            <div id="status-message"></div>
+        </div>
+    </article>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cameraSelect = document.getElementById('camera-select');
+            const statusMessage = document.getElementById('status-message');
+
+            // 利用可能なカメラを取得して選択肢に追加
+            async function getCameras() {
+                try {
+                    const devices = await navigator.mediaDevices.enumerateDevices();
+                    const videoDevices = devices.filter(device => device.kind === 'videoinput');
+
+                    // 選択肢をクリア
+                    cameraSelect.innerHTML = '';
+
+                    if (videoDevices.length === 0) {
+                        showStatus('カメラが見つかりませんでした。', 'error');
+                        return;
+                    }
+
+                    // カメラリストを追加
+                    videoDevices.forEach(device => {
+                        const option = document.createElement('option');
+                        option.value = device.deviceId;
+                        option.text = device.label || `カメラ ${videoDevices.indexOf(device) + 1}`;
+                        cameraSelect.appendChild(option);
+                    });
+
+                    // 保存されたカメラがあれば選択
+                    const savedCameraId = localStorage.getItem('selectedCameraId');
+                    if (savedCameraId) {
+                        // 保存されたカメラIDが選択肢にあるか確認
+                        const exists = Array.from(cameraSelect.options).some(option => option.value === savedCameraId);
+                        if (exists) {
+                            cameraSelect.value = savedCameraId;
+                        }
+                    }
+
+                    showStatus(`${videoDevices.length}台のカメラが見つかりました。`, 'success');
+                } catch (error) {
+                    console.error('カメラの取得に失敗しました:', error);
+                    showStatus('カメラの取得に失敗しました: ' + error.message, 'error');
+                }
+            }
+
+            // 選択を保存
+            function saveSelection() {
+                const deviceId = cameraSelect.value;
+                const deviceLabel = cameraSelect.options[cameraSelect.selectedIndex].text;
+
+                if (!deviceId) {
+                    showStatus('カメラが選択されていません。', 'error');
+                    return;
+                }
+
+                // LocalStorageに保存
+                localStorage.setItem('selectedCameraId', deviceId);
+                localStorage.setItem('selectedCameraLabel', deviceLabel);
+
+                showStatus('カメラ設定を保存しました。', 'success');
+            }
+
+            // ステータスメッセージを表示
+            function showStatus(message, type) {
+                statusMessage.textContent = message;
+                statusMessage.className = 'status-message ' + type;
+            }
+
+            // カメラ選択が変更されたとき
+            cameraSelect.addEventListener('change', function() {
+                saveSelection(); // 選択が変更されたら自動的に保存
+            });
+
+            // ページ読み込み時に実行
+            getCameras();
+        });
+    </script>
+</body>
+</html>
