@@ -32,6 +32,8 @@ document.addEventListener('DOMContentLoaded', function () {
             hints.set(ZXing.DecodeHintType.POSSIBLE_FORMATS, formats);
         }
 
+        navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+
         // 新しいリーダーを作成
         codeReader = new ZXing.BrowserMultiFormatReader(hints);
     }
@@ -52,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     const option = document.createElement('option');
                     option.value = device.deviceId;
                     option.text = device.label || `カメラ ${videoInputDevices.indexOf(device) + 1}`;
+                    alert(device.label + "[" + device.deviceId + "]");
                     sourceSelect.appendChild(option);
                 });
 
