@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // カメラ選択が変更されたときの処理
             sourceSelect.addEventListener('change', function() {
                 selectedDeviceId = sourceSelect.value;
+                resetScanning();
             });
 
             // フォーマット選択が変更されたときの処理
