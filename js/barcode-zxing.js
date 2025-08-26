@@ -121,6 +121,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 focusMode: 'continuous'
             }
         };
+        console.log(selectedDeviceId)
+        selectedDeviceId = null;
 
         codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
             if (result) {
