@@ -112,6 +112,16 @@ document.addEventListener('DOMContentLoaded', function () {
         // 現在選択されているフォーマットで再初期化
         initBarcodeReader();
 
+        const constraints = {
+            video: {
+                facingMode: 'environment',
+                width: { ideal: window.innerWidth },
+                height: { ideal: window.innerHeight },
+                aspectRatio: { ideal: window.innerWidth / window.innerHeight },
+                focusMode: 'continuous'
+            }
+        };
+
         codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
             if (result) {
                 console.log(result);
@@ -157,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error(err);
                 resultElement.innerHTML = `<p>エラー: ${err}</p>`;
             }
-        });
+        }, constraints);
     }
 
     // スキャン停止関数
